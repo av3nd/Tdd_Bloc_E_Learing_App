@@ -23,29 +23,44 @@ void main() {
   final tMap = jsonDecode(tJson) as DataMap;
   group('fromMap', () {
     test('should return a [UserModel] with the right data', () {
-    final result = UserModel.fromMap(tMap);
-    expect(result, equals(tModel));
+      final result = UserModel.fromMap(tMap);
+      expect(result, equals(tModel));
     });
   });
 
-  group('fromJson', () { 
+  group('fromJson', () {
     test('should return a [UserModel] with the right data', () {
       final result = UserModel.fromJson(tJson);
-    expect(result, equals(tModel));
+      expect(result, equals(tModel));
     });
   });
 
-  group('toMap', () { 
-   test('Should return a [Map] with the right data', () {
-    final result = tModel.toMap();
-    expect(result, equals(tMap));
-   });
+  group('toMap', () {
+    test('Should return a [Map] with the right data', () {
+      final result = tModel.toMap();
+      expect(result, equals(tMap));
+    });
   });
 
-    group('toJson', () { 
-   test('Should return a [Json] with the right data', () {
-    final result = tModel.toJson();
-    expect(result, equals(tJson));
-   });
+  group('toJson', () {
+    test('Should return a [Json] String with the right data', () {
+      final result = tModel.toJson();
+      final tJson = jsonEncode({
+        "id": "1",
+        "avatar": "_empty.avatar",
+        "createdAt": "_empty.createdAt",
+        "name": "_empty.name"
+      });
+      expect(result, tJson);
+    });
+  });
+
+  group('copyWith', () {
+    test('should return a [UserModel] with different data', () {
+      final result = tModel.copyWith(name: 'Paul');
+      expect(result.name, equals('Paul'));
+      // expect(result.name, not(tModel));
+
+    });
   });
 }
