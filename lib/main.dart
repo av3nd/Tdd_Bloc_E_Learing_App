@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tdd_tutorial_flutter/core/res/colors.dart';
+import 'package:tdd_tutorial_flutter/core/res/fonts.dart';
 import 'package:tdd_tutorial_flutter/core/services/injection_container.dart';
+import 'package:tdd_tutorial_flutter/core/services/router.dart';
 import 'package:tdd_tutorial_flutter/src/authetication/presentation/cubit/authentication_cubit.dart';
-import 'package:tdd_tutorial_flutter/src/authetication/presentation/views/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,8 +23,14 @@ class MainApp extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          fontFamily: Fonts.poppins,
+          appBarTheme: const AppBarTheme(
+            color: Colors.transparent,
+          ),
+          colorScheme: ColorScheme.fromSwatch(accentColor: Colours.primaryColour),
         ),
-        home: const HomeScreen(),
+        onGenerateRoute: generateRoute,
+        // home: const HomeScreen(),
       ),
     );
   }
