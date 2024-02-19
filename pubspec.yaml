@@ -43,7 +43,7 @@ dependencies:
   get_it: ^7.6.7
   file_picker: ^6.1.1
   font_awesome_flutter: ^10.7.0
-  intl: ^0.19.0
+  intl: ^0.18.1
   image_picker: ^1.0.7
   lottie: ^3.0.0
   open_file: ^3.3.2
@@ -54,6 +54,13 @@ dependencies:
   swipe_to: ^1.0.5
   url_launcher: ^6.2.4
   youtube_metadata: ^1.0.1
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.4
+  cloud_firestore: ^4.15.4
+  firebase_storage: ^11.6.5
+  iconly: ^1.0.1
+  firebase_ui_auth: ^1.7.0
+  uuid: ^4.3.3
 
 dev_dependencies:
   flutter_test:

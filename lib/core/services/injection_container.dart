@@ -1,12 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tdd_tutorial_flutter/src/authetication/data/datasources/authetication_remote_data_source.dart';
-import 'package:tdd_tutorial_flutter/src/authetication/data/repositories/authentication_repository_implementation.dart';
-import 'package:tdd_tutorial_flutter/src/authetication/domain/repositories/authentication_repository.dart';
-import 'package:tdd_tutorial_flutter/src/authetication/domain/usecases/create_user.dart';
-import 'package:tdd_tutorial_flutter/src/authetication/domain/usecases/get_users.dart';
-import 'package:tdd_tutorial_flutter/src/authetication/presentation/cubit/authentication_cubit.dart';
-import 'package:http/http.dart' as http;
+import 'package:tdd_tutorial_flutter/src/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:tdd_tutorial_flutter/src/auth/data/repos/auth_repo_impl.dart';
+import 'package:tdd_tutorial_flutter/src/auth/domain/repos/auth_repo.dart';
+import 'package:tdd_tutorial_flutter/src/auth/domain/usecases/forgot_password.dart';
+import 'package:tdd_tutorial_flutter/src/auth/domain/usecases/sign_in.dart';
+import 'package:tdd_tutorial_flutter/src/auth/domain/usecases/sign_up.dart';
+import 'package:tdd_tutorial_flutter/src/auth/domain/usecases/update_user.dart';
+import 'package:tdd_tutorial_flutter/src/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tdd_tutorial_flutter/src/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:tdd_tutorial_flutter/src/on_boarding/data/repositories/on_borading_repo_impl.dart';
 import 'package:tdd_tutorial_flutter/src/on_boarding/domain/repositories/on_boarding_repo.dart';
@@ -17,38 +21,42 @@ import 'package:tdd_tutorial_flutter/src/on_boarding/presentation/cubit/on_board
 final GetIt sl = GetIt.instance;
 
 Future<void> init() async {
-  final prefs = await SharedPreferences.getInstance();
+  await _initOnBoarding();
+  await _initAuth();
+}
 
-  //app logic
-  // sl
-  //   ..registerFactory(
-  //     () => AuthenticationCubit(createUser: sl(), getUsers: sl()),
-  //   )
-
-  //   //use cases
-  //   ..registerLazySingleton(() => CreateUser(sl()))
-  //   ..registerLazySingleton(() => GetUsers(sl()))
-
-  //   //repositories
-  //   ..registerLazySingleton<AutheticationRepository>(
-  //       () => AuthenticationRepositoryImplementation(sl()))
-  //   ..registerLazySingleton<AuthenticationRemoteDataSource>(
-  //       () => AuthRemoteDataSrcImpl(sl()))
-
-  //   //external dependencies
-  //   ..registerLazySingleton(() => http.Client());
-
+Future<void> _initAuth() async {
   sl
     ..registerFactory(
-      () =>
-          OnBoardingCubit(cacheFirstTimer: sl(), checkIfUserIsFirstTimer: sl()),
+      () => AuthBloc(
+          signIn: sl(), forgotPassword: sl(), signUp: sl(), updateUser: sl()),
     )
-        ..registerFactory(
-      () => AuthenticationCubit(createUser: sl(), getUsers: sl()),
+    ..registerLazySingleton(() => SignIn(sl()))
+    ..registerLazySingleton(() => SignUp(sl()))
+    ..registerLazySingleton(() => ForgotPassword(sl()))
+    ..registerLazySingleton(() => UpdateUser(sl()))
+    ..registerLazySingleton<AuthRepo>(() => AuthRepoImpl(sl()))
+    ..registerLazySingleton<AuthRemoteDataSource>(
+      () => AuthRemoteDataSourceImpl(
+        authClient: sl(),
+        cloudStoreClient: sl(),
+        dbClient: sl(),
+      ),
     )
+    ..registerLazySingleton(() => FirebaseAuth.instance)
+    ..registerLazySingleton(() => FirebaseFirestore.instance)
+    ..registerLazySingleton(() => FirebaseStorage.instance);
+}
 
-    //onboardind cubit
-
+Future<void> _initOnBoarding() async {
+  final prefs = await SharedPreferences.getInstance();
+  sl
+    ..registerFactory(
+      () => OnBoardingCubit(
+        cacheFirstTimer: sl(),
+        checkIfUserIsFirstTimer: sl(),
+      ),
+    )
     //use cases
     ..registerLazySingleton(() => CacheFirstTimer(sl()))
     ..registerLazySingleton(() => CheckIfUserIsFirstTimer(sl()))
@@ -59,21 +67,5 @@ Future<void> init() async {
       () => OnBoardingLocalDataSrcImpl(sl()),
     )
     //external dependencies
-    ..registerLazySingleton(() => prefs)
-
-    // authentication cubit
-
-       //use cases
-    ..registerLazySingleton(() => CreateUser(sl()))
-    ..registerLazySingleton(() => GetUsers(sl()))
-
-    //repositories
-    ..registerLazySingleton<AutheticationRepository>(
-        () => AuthenticationRepositoryImplementation(sl()))
-    ..registerLazySingleton<AuthenticationRemoteDataSource>(
-        () => AuthRemoteDataSrcImpl(sl()))
-
-    //external dependencies
-    ..registerLazySingleton(() => http.Client());
-
+    ..registerLazySingleton(() => prefs);
 }

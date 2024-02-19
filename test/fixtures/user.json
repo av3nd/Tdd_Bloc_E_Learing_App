@@ -1,6 +1,12 @@
 {
-    "id": "1",
-    "avatar": "_empty.avatar",
-    "createdAt": "_empty.createdAt",
-    "name": "_empty.name"
+  "uid":"",
+  "email":"",
+  "profilePic":null,
+  "bio":null,
+  "points":0,
+  "fullName":"",
+  "groupIds":[],
+  "enrolledCourseIds":[],
+  "following":[],
+  "followers":[]
 }

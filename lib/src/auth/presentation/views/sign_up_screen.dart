@@ -1,0 +1,137 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tdd_tutorial_flutter/core/common/app/providers/user_provider.dart';
+import 'package:tdd_tutorial_flutter/core/common/widgets/rounded_button.dart';
+import 'package:tdd_tutorial_flutter/core/res/fonts.dart';
+import 'package:tdd_tutorial_flutter/core/res/media_res.dart';
+import 'package:tdd_tutorial_flutter/core/utils/core_utils.dart';
+import 'package:tdd_tutorial_flutter/core/widgets/gradient_background.dart';
+import 'package:tdd_tutorial_flutter/src/auth/data/models/user_model.dart';
+import 'package:tdd_tutorial_flutter/src/auth/presentation/bloc/auth_bloc.dart';
+import 'package:tdd_tutorial_flutter/src/auth/presentation/views/sign_in_screen.dart';
+import 'package:tdd_tutorial_flutter/src/auth/presentation/widgets/sign_up_form.dart';
+import 'package:tdd_tutorial_flutter/src/dashboard/presentation/views/dashboard.dart';
+
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+  static const routeName = '/sign-up';
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final emailController = TextEditingController();
+  final fullNameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    fullNameController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (_, state) {
+          if (state is AuthError) {
+            CoreUtils.showSnackBar(context, state.message);
+          }else if (state is SignedUp) {
+            context.read<AuthBloc>().add(
+              SignInEvent(email: emailController.text.trim(), password: passwordController.text.trim(),),
+            );
+          }
+          else if (state is SignedIn) {
+            context.read<UserProvider>().initUser(state.user as LocalUserModel);
+            Navigator.pushReplacementNamed(context, Dashboard.routeName);
+          }
+        },
+        builder: (context, state) {
+          return GradientBackground(
+            image: MediaRes.onBoardingBackground,
+            child: SafeArea(
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  children: [
+                    Text(
+                      'Easy to learn, discover more skills',
+                      style: TextStyle(
+                        fontFamily: Fonts.aeonik,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 32,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Sign up for an account',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        Baseline(
+                          baseline: 100,
+                          baselineType: TextBaseline.alphabetic,
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(
+                                  context, SignInScreen.routeName);
+                            },
+                            child: const Text('Already have an account?'),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SignUpForm(
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        confirmPasswordController: confirmPasswordController,
+                        fullNameController: fullNameController,
+                        formKey: formKey),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                   
+                    if (state is AuthLoading)
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    else
+                      Rounded_Button(
+                        label: 'Sign Up',
+                        onPressed: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          FirebaseAuth.instance.currentUser?.reload();
+                          if (formKey.currentState!.validate()) {
+                            context.read<AuthBloc>().add(SignUpEvent(
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                                name: fullNameController.text.trim()
+                                ));
+                          }
+                        },
+                      )
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

@@ -4,7 +4,7 @@ import 'package:tdd_tutorial_flutter/core/errors/exceptions.dart';
 abstract class Failure extends Equatable{
 final String message;
 final dynamic statusCode;
-String get errorMessage => '$statusCode Error:$message';
+String get errorMessage => '$statusCode${statusCode is String? '' : ' Error'}: $message';
 
 Failure({required this.message, required this.statusCode})
   : assert(

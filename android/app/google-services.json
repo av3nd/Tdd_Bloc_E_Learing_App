@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "55041744485",
+    "project_id": "tdd-tutorial-flutter",
+    "storage_bucket": "tdd-tutorial-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55041744485:android:73153fbc1cb90e2b17308c",
+        "android_client_info": {
+          "package_name": "com.example.tdd_tutorial_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtY8MQJQo7NJP-8KZVSI-AXB_wdZcxHrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
