@@ -27,6 +27,8 @@ class MediaRes {
   static const video = '$_baseIcons/video.png';
   static const write = '$_baseIcons/write.png';
   static const youtube = '$_baseIcons/youtube.png';
+  static const material = '$_baseIcons/document.png';
+
 
 // images
   static const _baseImages = 'assets/images';

@@ -61,6 +61,18 @@ dependencies:
   iconly: ^1.0.1
   firebase_ui_auth: ^1.7.0
   uuid: ^4.3.3
+  video_player: ^2.8.2
+  chewie: ^1.7.5
+  badges: ^3.1.2
+  file_icon: ^1.0.0
+  flutter_link_previewer: ^3.2.2
+  audioplayers: ^5.2.1
+  step_progress_indicator: ^1.0.2
+  swipe_cards: ^2.0.0+1
+  flutter_card_swiper: ^7.0.0
+  flutter_tindercard:
+    git:
+      url: https://github.com/NonymousMorlock/flutter_tindercard.git
 
 dev_dependencies:
   flutter_test:

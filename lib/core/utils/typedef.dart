@@ -6,5 +6,7 @@ typedef ResultFuture<T> = Future<Either<Failure,T>>;
 typedef ResultVoid = ResultFuture<void>;
 
 typedef DataMap = Map<String, dynamic>;
+typedef ResultStream<T> = Stream<Either<Failure, T>>;
+
 
 // typedef ResultFuture<T> = Future<Either<Failure,T>>;

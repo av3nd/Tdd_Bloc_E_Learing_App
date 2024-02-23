@@ -2,8 +2,14 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconly/iconly.dart';
 import 'package:tdd_tutorial_flutter/core/common/widgets/popup_item.dart';
+import 'package:tdd_tutorial_flutter/core/extensions/context_extension.dart';
 import 'package:tdd_tutorial_flutter/core/res/colors.dart';
+import 'package:tdd_tutorial_flutter/core/services/injection_container.dart';
+import 'package:tdd_tutorial_flutter/src/auth/presentation/bloc/auth_bloc.dart';
+import 'package:tdd_tutorial_flutter/src/profile/presentation/views/edit_profile_view.dart';
 
 class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ProfileAppBar({super.key});
@@ -13,64 +19,80 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: const Text(
         'Account',
-        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 24,
+        ),
       ),
       actions: [
         PopupMenuButton(
           offset: const Offset(0, 50),
           surfaceTintColor: Colors.white,
           icon: const Icon(Icons.more_horiz),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
           itemBuilder: (_) => [
             PopupMenuItem<void>(
+              child: const PopupItem(
+                title: 'Edit Profile',
+                icon: Icon(
+                  Icons.edit_outlined,
+                  color: Colours.neutralTextColour,
+                ),
+              ),
+              onTap: () => context.push(
+                BlocProvider(
+                  create: (_) => sl<AuthBloc>(),
+                  child: const EditProfileView(),
+                ),
+              ),
+            ),
+            const PopupMenuItem<void>(
               child: PopupItem(
-                  title: 'Edit Profile',
-                  icon: Icon(
-                    Icons.edit_outlined,
-                    color: Colours.neutralTextColour,
-                  )),
-              // onTap: ()=> context.push(const Placeholder()),
+                title: 'Notification',
+                icon: Icon(
+                  IconlyLight.notification,
+                  color: Colours.neutralTextColour,
+                ),
+              ),
+            ),
+            const PopupMenuItem<void>(
+              child: PopupItem(
+                title: 'Help',
+                icon: Icon(
+                  Icons.help_outline_outlined,
+                  color: Colours.neutralTextColour,
+                ),
+              ),
             ),
             PopupMenuItem<void>(
-              child: PopupItem(
-                  title: 'Notifications',
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colours.neutralTextColour,
-                  )),
-              // onTap: ()=> context.push(const Placeholder()),
-            ),
-            PopupMenuItem<void>(
-              child: PopupItem(
-                  title: 'Help',
-                  icon: Icon(
-                    Icons.help_outline_outlined,
-                    color: Colours.neutralTextColour,
-                  )),
-              // onTap: ()=> context.push(const Placeholder()),
-            ),
-            PopupMenuItem<void>(
+              height: 1,
+              padding: EdgeInsets.zero,
+              child: Divider(
                 height: 1,
-                padding: EdgeInsets.zero,
-                child: Divider(
-                  height: 1,
-                  color: Colors.grey.shade300,
-                  endIndent: 16,
-                  indent: 16,
-                )),
+                color: Colors.grey.shade300,
+                endIndent: 16,
+                indent: 16,
+              ),
+            ),
             PopupMenuItem<void>(
-              child: PopupItem(
-                  title: 'Log Out',
-                  icon: Icon(
-                    Icons.logout_rounded,
-                    color: Colors.black,
-                  )),
+              child: const PopupItem(
+                title: 'Logout',
+                icon: Icon(
+                  Icons.logout_rounded,
+                  color: Colors.black,
+                ),
+              ),
               onTap: () async {
                 final navigator = Navigator.of(context);
                 await FirebaseAuth.instance.signOut();
                 unawaited(
-                    navigator.pushNamedAndRemoveUntil('/', (route) => false));
+                  navigator.pushNamedAndRemoveUntil(
+                    '/',
+                    (route) => false,
+                  ),
+                );
               },
             ),
           ],
@@ -82,3 +104,4 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+

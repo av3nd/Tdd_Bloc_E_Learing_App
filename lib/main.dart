@@ -1,13 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tdd_tutorial_flutter/core/common/app/providers/course_of_the_day_notifier.dart';
 import 'package:tdd_tutorial_flutter/core/common/app/providers/user_provider.dart';
 import 'package:tdd_tutorial_flutter/core/res/colors.dart';
 import 'package:tdd_tutorial_flutter/core/res/fonts.dart';
 import 'package:tdd_tutorial_flutter/core/services/injection_container.dart';
 import 'package:tdd_tutorial_flutter/core/services/router.dart';
 import 'package:tdd_tutorial_flutter/firebase_options.dart';
-import 'package:tdd_tutorial_flutter/src/dashboard/presentation/views/providers/dashboard_controller.dart';
+import 'package:tdd_tutorial_flutter/src/dashboard/presentation/providers/dashboard_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,8 @@ class MainApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_)=> UserProvider(),),
         ChangeNotifierProvider(create: (_)=> DashboardController(),),
+        ChangeNotifierProvider(create: (_) => CourseOfTheDayNotifier()),
+
       ],
       child: MaterialApp(
         theme: ThemeData(

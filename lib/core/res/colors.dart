@@ -22,7 +22,9 @@ class Colours {
   static const greenColour = Color(0xFF28CA6C);
   static const chatFiledColour = Color(0xFFF4F5F6);
   static const chatFiledColourDarker = Color(0xFFE8E9EA);
-  static const currentUserChatBubbleColour = Color(0xFFEEEEEE);
+  static const currentUserChatBubbleColour = Color(0xFF2196F3);
   static const currentUserChatBubbleColourDarker = Color(0xFF1976D2);
   static const otherUserChatBubbleColourDarker = Color(0xFFE0E0E0);
+    static const otherUserChatBubbleColour = Color(0xFFEEEEEE);
+
 }

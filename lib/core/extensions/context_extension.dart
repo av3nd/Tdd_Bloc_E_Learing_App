@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tdd_tutorial_flutter/core/common/app/providers/course_of_the_day_notifier.dart';
 import 'package:tdd_tutorial_flutter/core/common/app/providers/tab_navigator.dart';
 import 'package:tdd_tutorial_flutter/core/common/app/providers/user_provider.dart';
 import 'package:tdd_tutorial_flutter/src/auth/domain/entities/user.dart';
+import 'package:tdd_tutorial_flutter/src/course/domain/entities/course.dart';
 
 
 
@@ -20,6 +22,8 @@ extension ContextExt on BuildContext{
   TabNavigator get tabNavigator => read<TabNavigator>();
   void pop() => tabNavigator.pop();
   void push(Widget page) => tabNavigator.push(TabItem(child: page));
+
+    Course? get courseOfTheDay => read<CourseOfTheDayNotifier>().courseOfTheDay;
 
 
 }

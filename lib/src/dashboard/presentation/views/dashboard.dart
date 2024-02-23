@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:tdd_tutorial_flutter/core/common/app/providers/user_provider.dart';
 import 'package:tdd_tutorial_flutter/core/res/colors.dart';
 import 'package:tdd_tutorial_flutter/src/auth/data/models/user_model.dart';
-import 'package:tdd_tutorial_flutter/src/dashboard/presentation/views/providers/dashboard_controller.dart';
-import 'package:tdd_tutorial_flutter/src/dashboard/presentation/views/utils/dashboard_utils.dart';
+import 'package:tdd_tutorial_flutter/src/dashboard/presentation/providers/dashboard_controller.dart';
+import 'package:tdd_tutorial_flutter/src/dashboard/presentation/utils/dashboard_utils.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});

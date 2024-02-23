@@ -37,6 +37,7 @@ class LocalUser extends Equatable {
           followers: const [],
           following: const [],
         );
+    bool get isAdmin => email == 'avendtabdar@gmail.com';
 
   @override
   List<Object?> get props => [
