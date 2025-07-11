@@ -1,18 +1,25 @@
-# tdd_tutorial_flutter
+📚 E‑Learning App (Flutter + Firebase)
+A cross-platform e-learning mobile app built using Flutter and structured with Clean Architecture. The app provides a streamlined environment for both instructors and learners to interact through course content and real-time communication.
 
-A new Flutter project.
+🚀 Features
+Course Management
+Add, edit, and delete courses with ease.
 
-[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
+User Groups
+Create and manage study groups for specific courses.
 
-## Getting Started
+Real-Time Chat
+Group members can communicate via in-app chat using Firebase Firestore.
 
-This project is a starting point for a Flutter application.
+Authentication
+User sign-up and login using Firebase Authentication.
 
-A few resources to get you started if this is your first Flutter project:
+Clean Architecture
+Codebase structured into presentation, domain, and data layers for better scalability and testability.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+🛠️ Tech Stack
+Frontend: Flutter
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Backend: Firebase (Authentication, Firestore, Storage)
+
+Architecture: Clean Architecture pattern (Data, Domain, Presentation layers)
