@@ -3,19 +3,19 @@ A cross-platform e-learning mobile app built using Flutter and structured with C
 
 🚀 Features
 Course Management
-Add, edit, and delete courses with ease.
+- Add, edit, and delete courses with ease.
 
 User Groups
-Create and manage study groups for specific courses.
+- Create and manage study groups for specific courses.
 
 Real-Time Chat
-Group members can communicate via in-app chat using Firebase Firestore.
+- Group members can communicate via in-app chat using Firebase Firestore.
 
 Authentication
-User sign-up and login using Firebase Authentication.
+- User sign-up and login using Firebase Authentication.
 
 Clean Architecture
-Codebase structured into presentation, domain, and data layers for better scalability and testability.
+- Codebase structured into presentation, domain, and data layers for better scalability and testability.
 
 🛠️ Tech Stack
 Frontend: Flutter
